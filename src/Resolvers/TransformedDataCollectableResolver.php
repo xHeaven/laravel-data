@@ -75,11 +75,10 @@ class TransformedDataCollectableResolver
         bool $executeWrap,
         TransformationContext $nestedContext,
     ): array {
-        $collection = [];
-
-        foreach ($items as $key => $value) {
-            $collection[$key] = $this->transformationClosure($nestedContext)($value);
-        }
+        $collection = array_map(
+            fn ($value) => $this->transformationClosure($nestedContext)($value),
+            $items
+        );
 
         return $executeWrap
             ? $wrap->wrap($collection)
