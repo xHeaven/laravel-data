@@ -77,7 +77,7 @@ class TransformedDataCollectableResolver
     ): array {
         $collection = array_map(
             fn ($value) => $this->transformationClosure($nestedContext)($value),
-            $items
+            is_array($items) ? $items : $items->all()
         );
 
         return $executeWrap
